@@ -1,0 +1,98 @@
+{
+  "nodes": {
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1667395993,
+        "narHash": "sha256-nuEHfE/LcWyuSWnS8t12N1wc105Qtau+/OdUAjtQ0rA=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5aed5285a952e0b949eb3ba02c12fa4fcfef535f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixlib": {
+      "locked": {
+        "lastModified": 1636849918,
+        "narHash": "sha256-nzUK6dPcTmNVrgTAC1EOybSMsrcx+QrVPyqRdyKLkjA=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "28a5b0557f14124608db68d3ee1f77e9329e9dd5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixos-generators": {
+      "inputs": {
+        "nixlib": "nixlib",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1672682641,
+        "narHash": "sha256-940TLvtdT8YKuP5nXcPhUfNeK0A/leSjjG8hfqvWM84=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "30516cb2b01896e14ce66893e414b6e3eec71cac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1674641431,
+        "narHash": "sha256-qfo19qVZBP4qn5M5gXc/h1MDgAtPA5VxJm9s8RUAkVk=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9b97ad7b4330aacda9b2343396eb3df8a853b4fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixos-generators": "nixos-generators",
+        "nixpkgs": "nixpkgs",
+        "steev-kernel": "steev-kernel"
+      }
+    },
+    "steev-kernel": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657738541,
+        "narHash": "sha256-eAjKJxnV/fsg1j/JP/b7nm3v7vR5LalTeLG3mpXEaPE=",
+        "owner": "steev",
+        "repo": "linux",
+        "rev": "4a19bb8288ca97519c47f0a3b0528f1aba651386",
+        "type": "github"
+      },
+      "original": {
+        "owner": "steev",
+        "ref": "lenovo-x13s",
+        "repo": "linux",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

@@ -2,9 +2,22 @@
 
 let
   dtbName = "sc8280xp-lenovo-thinkpad-x13s.dtb";
+  steev_kernel_pkg = { buildLinux, ... }@args:
+    buildLinux (args // rec {
+      version = "5.19.0";
+      modDirVersion = "5.19.0-rc8";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "steev";
+        repo = "linux";
+        rev = "refs/tags/lenovo-x13s-5.19-rc8";
+        sha256 = "QfJCAcFV3DtRlvivZrilmZ448QkGgxErkvOp574oh70=";
+      };
+      kernelPatches = [];
+    } // (args.argsOverride or {}));
+  steev_kernel = pkgs.callPackage steev_kernel_pkg {};
 in {
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.zfs.enableUnstable = true;
   boot.kernelParams = [
     "dtb=/boot/aarch64/${dtbName}"
   ];
@@ -20,26 +33,13 @@ in {
 
   environment.systemPackages = with pkgs; [
     git
-    git-crypt
-    gnupg
   ];
-
-  programs.gnupg.agent = {
-    enable = true;
-    pinentryFlavor = "tty";
-  };
 
   networking.wireless = {
     enable = true;
   };
 
-  environment.etc."gnupg/keys.pub".source = ../../settings/home-manager/keys.pub;
-
-  environment.loginShellInit = ''
-    ${pkgs.gnupg}/bin/gpg --import /etc/gnupg/keys.pub
-  '';
-
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.05";
 
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
