@@ -2,31 +2,34 @@
 
 let
   dtbName = "sc8280xp-lenovo-thinkpad-x13s.dtb";
-  steev_kernel_pkg = { buildLinux, ... }@args:
-    buildLinux (args // rec {
-      version = "5.19.0";
-      modDirVersion = "5.19.0-rc8";
-
-      src = pkgs.fetchFromGitHub {
-        owner = "steev";
-        repo = "linux";
-        rev = "refs/tags/lenovo-x13s-5.19-rc8";
-        sha256 = "QfJCAcFV3DtRlvivZrilmZ448QkGgxErkvOp574oh70=";
-      };
-      kernelPatches = [];
-    } // (args.argsOverride or {}));
-  steev_kernel = pkgs.callPackage steev_kernel_pkg {};
 in {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelParams = [
-    "dtb=/boot/aarch64/${dtbName}"
-  ];
-  isoImage.contents = [
+  boot.kernelPatches = [
     {
-      source = "${config.boot.kernelPackages.kernel}/dtbs/qcom/${dtbName}";
-      target = "boot/aarch64/${dtbName}";
+      name = "Disable PCI DMA";
+      patch = null;
+      extraConfig = ''
+        CONFIG_EFI_DISABLE_PCI_DMA y
+        CONFIG_EFI_STUB y
+        CONFIG_EFI_GENERIC_STUB y
+        CONFIG_EFI_ARMSTUB_DTB_LOADER y
+      '';
     }
   ];
+  boot.kernelParams = [
+    "efi=novamap"
+    "pd_ignore_unused"
+    "clk_ignore_unused"
+  ];
+  isoImage = {
+    makeUsbBootable = false;
+    makeEfiBootable = true;
+    contents = [
+      {
+        source = "${config.boot.kernelPackages.kernel}/dtbs";
+        target = "boot/dtbs";
+      }
+    ];
+  };
   hardware.deviceTree = {
     enable = true;
   };
@@ -34,10 +37,6 @@ in {
   environment.systemPackages = with pkgs; [
     git
   ];
-
-  networking.wireless = {
-    enable = true;
-  };
 
   system.stateVersion = "23.05";
 
