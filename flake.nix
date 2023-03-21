@@ -15,22 +15,21 @@
   };
 
   outputs = { self, nixpkgs, flake-utils, nixos-generators, steev-kernel, ... }@inputs:
-    flake-utils.lib.eachSystem [ "aarch64-linux" "x86_64-linux" ] (system:
+    flake-utils.lib.eachDefaultSystem (hostSystem:
       {
         packages = {
-          aarch64-installer = let
+          aarch64-installer = nixos-generators.nixosGenerate rec {
               system = "aarch64-linux";
-            in nixos-generators.nixosGenerate {
-              inherit system;
               modules = [
                 ./installers/aarch64
                 {
-                  nixpkgs.buildPlatform.system = "x86_64-linux";
+                  nixpkgs.buildPlatform.system = hostSystem;
                   nixpkgs.hostPlatform.system = system;
                 }
+
               ];
               format = "install-iso";
             };
-        };
+          };
       });
 }
