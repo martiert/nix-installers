@@ -8,20 +8,21 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    steev-kernel = {
-      url = "github:steev/linux/lenovo-x13s";
-      flake = false;
+    module = {
+      url = "github:martiert/nixos-module";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, nixos-generators, steev-kernel, ... }@inputs:
+  outputs = { self, nixpkgs, flake-utils, nixos-generators, module, ... }@inputs:
     flake-utils.lib.eachDefaultSystem (hostSystem:
       {
         packages = {
-          aarch64-installer = nixos-generators.nixosGenerate rec {
+          x13s-installer = nixos-generators.nixosGenerate rec {
               system = "aarch64-linux";
               modules = [
-                ./installers/aarch64
+                module.minimal
+                ./installers/x13s
                 {
                   nixpkgs.buildPlatform.system = hostSystem;
                   nixpkgs.hostPlatform.system = system;
