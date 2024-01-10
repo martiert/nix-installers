@@ -21,13 +21,8 @@
           x13s-installer = nixos-generators.nixosGenerate rec {
               system = "aarch64-linux";
               modules = [
-                module.minimal
+                module.nixosModules.minimal
                 ./installers/x13s
-                {
-                  nixpkgs.buildPlatform.system = hostSystem;
-                  nixpkgs.hostPlatform.system = system;
-                }
-
               ];
               format = "install-iso";
             };

@@ -25,17 +25,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1704699366,
-        "narHash": "sha256-bENutF1mVa5Q7rfPp7vqqkvfRysWwhkjZb3RwR3ebes=",
-        "owner": "martiert",
-        "repo": "nixos-module",
-        "rev": "0e53ff645cf037c99a0cb56a8ce608dfbeb91d7b",
-        "type": "github"
+        "dirtyRev": "efbbbc4da4d2b78aa2dc9a7294bd6c0a271ec56f-dirty",
+        "dirtyShortRev": "efbbbc4-dirty",
+        "lastModified": 1704794543,
+        "narHash": "sha256-znIgmCszOgZ6DyOIpRFeuToQgE85VKRITUQ+Vf0w29k=",
+        "type": "git",
+        "url": "file:///home/martin/src/Projects/nix/module"
       },
       "original": {
-        "owner": "martiert",
-        "repo": "nixos-module",
-        "type": "github"
+        "type": "git",
+        "url": "file:///home/martin/src/Projects/nix/module"
       }
     },
     "nixlib": {

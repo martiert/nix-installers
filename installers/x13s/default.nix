@@ -1,13 +1,22 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, modulesPath, ... }:
 
-let
-  dtbName = "sc8280xp-lenovo-thinkpad-x13s.dtb";
-  firmware = pkgs.callPackages ./firmware {};
-in {
-  martiert = {
+{
+  nixpkgs.overlays = [(final: super: {
+    zfs = super.zfs.overrideAttrs(_: {
+      meta.platforms = [];
+    });
+    upower = super.upower.overrideAttrs(_: {
+      doCheck = false;
+    });
+  })];
+
+  martiert.system = {
     type = "laptop";
     aarch64.arch = "sc8280xp";
   };
+  boot.supportedFilesystems = lib.mkForce [
+    "ext4"
+  ];
 
   environment.systemPackages = with pkgs; [
     git
